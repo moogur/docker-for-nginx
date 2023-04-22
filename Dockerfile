@@ -11,11 +11,9 @@ WORKDIR /additional
 
 COPY docker-entrypoint.sh docker-entrypoint.sh
 
-RUN mkdir brotli \
-    && cd brotli \
-    && mkdir dist
+RUN mkdir brotli-dist
 
-ENV brotli_folder=/additional/brotli
+ENV brotli_folder=/additional
 
 RUN apk update \
     && apk add wget git linux-headers openssl-dev pcre2-dev zlib-dev openssl abuild \
@@ -24,19 +22,18 @@ RUN apk update \
     && wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar zxvf nginx-$NGINX_VERSION.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git \
-    && ls -la /additional \
     && cd $brotli_folder/ngx_brotli || exit \
     && git submodule update --init \
     && cd $brotli_folder/nginx-$NGINX_VERSION || exit \
     && ./configure --with-compat --add-dynamic-module=../ngx_brotli \
     && make modules \
-    && cp $brotli_folder/nginx-$NGINX_VERSION/objs/*.so $brotli_folder/dist \
+    && cp $brotli_folder/nginx-$NGINX_VERSION/objs/*.so $brotli_folder/brotli-dist \
     && echo "brotli assembled successfully"
 
 # Second stage to run
 FROM nginx:${NGINX_VERSION}
 
 COPY --from=build /additional/docker-entrypoint.sh /docker-entrypoint.sh
-COPY --from=build /additional/brotli/dist /usr/lib/nginx/additional-modules
+COPY --from=build /additional/brotli-dist /usr/lib/nginx/additional-modules
 
 CMD ["nginx" "-g" "daemon off;"]
