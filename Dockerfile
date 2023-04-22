@@ -13,6 +13,7 @@ RUN mkdir brotli \
     && cd brotli \
     && mkdir dist
 
+ENV nginx_version=${NGINX_VERSION}
 ENV brotli_folder=/additional/brotli
 
 RUN apk update \
