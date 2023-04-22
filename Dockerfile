@@ -35,5 +35,3 @@ FROM nginx:${NGINX_VERSION}-alpine
 
 COPY --from=build /additional/docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=build /additional/brotli-dist /usr/lib/nginx/additional-modules
-
-CMD ["nginx" "-g" "daemon off;"]
