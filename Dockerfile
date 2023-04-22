@@ -13,22 +13,21 @@ RUN mkdir brotli \
     && cd brotli \
     && mkdir dist
 
-ENV nginx_version=${NGINX_VERSION}
 ENV brotli_folder=/additional/brotli
 
 RUN apk update \
     && apk add wget git linux-headers openssl-dev pcre2-dev zlib-dev openssl abuild \
       musl-dev libxslt libxml2-utils make mercurial gcc unzip git \
       xz g++ coreutils \
-    && wget https://nginx.org/download/nginx-$nginx_version.tar.gz \
-    && tar zxvf nginx-$nginx_version.tar.gz \
+    && wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
+    && tar zxvf nginx-$NGINX_VERSION.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git \
     && cd $brotli_folder/ngx_brotli || exit \
     && git submodule update --init \
-    && cd $brotli_folder/nginx-$nginx_version || exit \
+    && cd $brotli_folder/nginx-$NGINX_VERSION || exit \
     && ./configure --with-compat --add-dynamic-module=../ngx_brotli \
     && make modules \
-    && cp $brotli_folder/nginx-$nginx_version/objs/*.so $brotli_folder/dist \
+    && cp $brotli_folder/nginx-$NGINX_VERSION/objs/*.so $brotli_folder/dist \
     && echo "brotli assembled successfully"
 
 # Second stage to run
