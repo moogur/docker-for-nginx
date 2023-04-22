@@ -24,6 +24,7 @@ RUN apk update \
     && wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar zxvf nginx-$NGINX_VERSION.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git \
+    && ls -la /additional \
     && cd $brotli_folder/ngx_brotli || exit \
     && git submodule update --init \
     && cd $brotli_folder/nginx-$NGINX_VERSION || exit \
