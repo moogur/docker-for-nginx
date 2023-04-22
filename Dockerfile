@@ -31,7 +31,7 @@ RUN apk update \
     && echo "brotli assembled successfully"
 
 # Second stage to run
-FROM nginx:${NGINX_VERSION}
+FROM nginx:${NGINX_VERSION}-alpine
 
 COPY --from=build /additional/docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=build /additional/brotli-dist /usr/lib/nginx/additional-modules
