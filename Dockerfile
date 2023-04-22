@@ -5,6 +5,8 @@ ARG NGINX_VERSION=1.23.4
 # First stage to build
 FROM alpine:${ALPINE_VERSION} AS build
 
+ARG NGINX_VERSION
+
 WORKDIR /additional
 
 COPY docker-entrypoint.sh docker-entrypoint.sh
