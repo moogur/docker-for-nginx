@@ -24,7 +24,7 @@ jobs:
       - name: "Determining the version"
         id: version
         run: |
-          if [[ github.event_name == 'push' ]]; then
+          if [[ ${{ github.event_nam }} == 'push' ]]; then
             tag=${GITHUB_REF/refs\/tags\//}
             version=${tag#v}
             echo "VERSION=${version}" >> $GITHUB_OUTPUT
