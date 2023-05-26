@@ -14,6 +14,8 @@ RUN mkdir brotli-dist
 
 ENV brotli_folder=/additional
 
+RUN ls -la /usr/lib/nginx/modules/ngx_http_geoip_module.so
+
 RUN apk update \
     && apk add wget git linux-headers openssl-dev pcre2-dev zlib-dev openssl abuild \
       musl-dev libxslt libxml2-utils make mercurial gcc unzip git \
