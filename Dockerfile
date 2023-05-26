@@ -33,5 +33,5 @@ RUN apk update \
 FROM nginx:${NGINX_VERSION}-alpine-slim
 
 COPY --from=build /additional/docker-entrypoint.sh /docker-entrypoint.sh
-COPY --from=build /usr/lib/nginx/modules/ngx_http_geoip_module.so /usr/lib/nginx/additional-modules/ngx_http_geoip_module.so
+COPY --from=build /usr/lib/nginx/modules/ngx_http_geoip_module.so /usr/lib/nginx/modules/ngx_http_geoip_module.so
 COPY --from=build /additional/brotli-dist /usr/lib/nginx/additional-modules
