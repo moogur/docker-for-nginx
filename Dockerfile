@@ -1,8 +1,9 @@
 # Set versions
+ARG ALPINE_VERSION=3.17
 ARG NGINX_VERSION=1.24.0
 
 # First stage to build
-FROM nginx:${NGINX_VERSION}-alpine AS build
+FROM alpine:${ALPINE_VERSION} AS build
 
 ARG NGINX_VERSION
 
@@ -13,8 +14,6 @@ COPY docker-entrypoint.sh docker-entrypoint.sh
 RUN mkdir brotli-dist
 
 ENV brotli_folder=/additional
-
-RUN ls -la /usr/lib/nginx/modules
 
 RUN apk update \
     && apk add wget git linux-headers openssl-dev pcre2-dev zlib-dev openssl abuild \
@@ -32,12 +31,7 @@ RUN apk update \
     && echo "brotli assembled successfully"
 
 # Second stage to run
-FROM nginx:${NGINX_VERSION}-alpine-slim
+FROM nginx:${NGINX_VERSION}-alpine
 
 COPY --from=build /additional/docker-entrypoint.sh /docker-entrypoint.sh
-COPY --from=build /usr/lib/nginx/modules/ngx_http_geoip_module.so /usr/lib/nginx/modules/ngx_http_geoip_module.so
 COPY --from=build /additional/brotli-dist /usr/lib/nginx/additional-modules
-
-
-RUN ls -la /usr/lib/nginx/modules
-RUN ls -la /usr/lib/nginx
