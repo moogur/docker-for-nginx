@@ -14,7 +14,7 @@ RUN mkdir brotli-dist
 
 ENV brotli_folder=/additional
 
-RUN ls -la /usr/lib/nginx/modules/ngx_http_geoip_module.so
+RUN ls -la /usr/lib/nginx/modules
 
 RUN apk update \
     && apk add wget git linux-headers openssl-dev pcre2-dev zlib-dev openssl abuild \
@@ -37,3 +37,7 @@ FROM nginx:${NGINX_VERSION}-alpine-slim
 COPY --from=build /additional/docker-entrypoint.sh /docker-entrypoint.sh
 COPY --from=build /usr/lib/nginx/modules/ngx_http_geoip_module.so /usr/lib/nginx/modules/ngx_http_geoip_module.so
 COPY --from=build /additional/brotli-dist /usr/lib/nginx/additional-modules
+
+
+RUN ls -la /usr/lib/nginx/modules
+RUN ls -la /usr/lib/nginx
