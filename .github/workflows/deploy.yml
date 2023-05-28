@@ -9,8 +9,10 @@ on:
 
 jobs:
   variables:
-    run: |
-      echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
+    steps:
+      - name: "Set variables"
+        run: |
+          echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
 
   deploy:
     needs: [variables]
