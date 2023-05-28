@@ -22,4 +22,4 @@ jobs:
           repository: ${{ github.event.repository.name }}
           github_user: ${{ github.event.actor.login }}
           event_name: ${{ github.event_name }}
-          ref: ${{ steps.version.outputs.ref }}
+          ref: ${{ steps.variables.outputs.ref }}
