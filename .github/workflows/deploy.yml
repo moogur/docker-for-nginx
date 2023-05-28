@@ -8,18 +8,16 @@ on:
     - cron: "45 0 1 1,7 *"
 
 jobs:
-  deploy:
-    steps:
-      - name: "Set variables"
-        id: variables
-        run: |
-          echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
+  variables:
+    run: |
+      echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
 
-      - name: "Deploy"
-        uses: moogur/all-workflows/.github/workflows/deploy_for_docker_container.yml@master
-        secrets: inherit
-        with:
-          repository: ${{ github.event.repository.name }}
-          github_user: ${{ github.event.actor.login }}
-          event_name: ${{ github.event_name }}
-          ref: ${{ steps.variables.outputs.ref }}
+  deploy:
+    needs: [variables]
+    uses: moogur/all-workflows/.github/workflows/deploy_for_docker_container.yml@master
+    secrets: inherit
+    with:
+      repository: ${{ github.event.repository.name }}
+      github_user: ${{ github.event.actor.login }}
+      event_name: ${{ github.event_name }}
+      ref: ${{ needs.variables.outputs.ref }}
