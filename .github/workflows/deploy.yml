@@ -9,9 +9,17 @@ on:
 
 jobs:
   deploy:
-    uses: moogur/all-workflows/.github/workflows/deploy_for_docker_container.yml@master
-    secrets: inherit
-    with:
-      repository: ${{ github.event.repository.name }}
-      ref: $GITHUB_REF
-      event_name: ${{ github.event_name }}
+    steps:
+      - name: "Set variables"
+        id: variables
+        run: |
+          echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
+
+      - name: "Deploy"
+        uses: moogur/all-workflows/.github/workflows/deploy_for_docker_container.yml@master
+        secrets: inherit
+        with:
+          repository: ${{ github.event.repository.name }}
+          github_user: ${{ github.event.actor.login }}
+          event_name: ${{ github.event_name }}
+          ref: ${{ steps.version.outputs.ref }}
