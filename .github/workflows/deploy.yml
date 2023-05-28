@@ -10,8 +10,11 @@ on:
 jobs:
   variables:
     runs-on: ubuntu-latest
+    outputs:
+      ref: ${{ steps.vars.outputs.ref }}
     steps:
       - name: "Set variables"
+        id: vars
         run: |
           echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
 
