@@ -12,13 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       ref: ${{ steps.vars.outputs.ref }}
-      user: ${{ steps.vars.outputs.user }}
     steps:
       - name: "Set variables"
         id: vars
         run: |
           echo "ref=$GITHUB_REF" >> $GITHUB_OUTPUT
-          echo "user=$GITHUB_ACTOR" >> $GITHUB_OUTPUT
 
   deploy:
     needs: [variables]
@@ -27,5 +25,4 @@ jobs:
     with:
       repository: ${{ github.event.repository.name }}
       event_name: ${{ github.event_name }}
-      github_user: ${{ needs.variables.outputs.user }}
       ref: ${{ needs.variables.outputs.ref }}
