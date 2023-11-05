@@ -45,12 +45,16 @@ if [ "$1" = "nginx" -o "$1" = "nginx-debug" ]; then
 fi
 
 # downloading the maxmind database
-geo_ip_directory=/usr/share/GeoIP
-if [ "$(ls -A $geo_ip_directory)" ]; then
-  rm $geo_ip_directory/*
+if [ "$LOCAL_DATABASES" = "false" ]; then
+
+  geo_ip_directory=/usr/share/GeoIP
+  if [ "$(ls -A $geo_ip_directory)" ]; then
+    rm $geo_ip_directory/*
+  fi
+  wget -q -O $geo_ip_directory/GeoIPCountry.dat.gz https://dl.miyuru.lk/geoip/maxmind/country/maxmind4.dat.gz && gzip -d $geo_ip_directory/GeoIPCountry.dat.gz
+  wget -q -O $geo_ip_directory/GeoIPCity.dat.gz https://dl.miyuru.lk/geoip/maxmind/city/maxmind4.dat.gz && gzip -d $geo_ip_directory/GeoIPCity.dat.gz
+  entrypoint_log "$0: The bases for the geoip module are installed"
+
 fi
-wget -q -O $geo_ip_directory/GeoIPCountry.dat.gz https://dl.miyuru.lk/geoip/maxmind/country/maxmind4.dat.gz && gzip -d $geo_ip_directory/GeoIPCountry.dat.gz
-wget -q -O $geo_ip_directory/GeoIPCity.dat.gz https://dl.miyuru.lk/geoip/maxmind/city/maxmind4.dat.gz && gzip -d $geo_ip_directory/GeoIPCity.dat.gz
-entrypoint_log "$0: The bases for the geoip module are installed"
 
 exec "$@"
