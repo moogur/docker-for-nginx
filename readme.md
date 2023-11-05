@@ -13,3 +13,7 @@
 ### Docker container
 
 - <https://github.com/nginxinc/docker-nginx>
+
+## Переменные
+
+- LOCAL_DATABASES - если `false` то скачивает базы mixmind из интернета
