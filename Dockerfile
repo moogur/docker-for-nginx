@@ -1,5 +1,5 @@
 # Set versions
-ARG ALPINE_VERSION=3.17
+ARG ALPINE_VERSION=3.18
 ARG NGINX_VERSION=1.24.0
 
 # First stage to build
@@ -16,13 +16,13 @@ RUN mkdir brotli-dist
 ENV brotli_folder=/additional
 
 RUN apk update \
-    && apk add wget git linux-headers openssl-dev pcre2-dev zlib-dev openssl abuild \
-      musl-dev libxslt libxml2-utils make mercurial gcc unzip git \
-      xz g++ coreutils \
+    && apk add wget linux-headers openssl-dev pcre2-dev zlib-dev abuild \
+      musl-dev libxslt libxml2-utils make gcc unzip git xz g++ coreutils \
     && wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar zxvf nginx-$NGINX_VERSION.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git \
     && cd $brotli_folder/ngx_brotli || exit \
+    && git checkout 6e975bcb015f62e1f303054897783355e2a877dc \
     && git submodule update --init \
     && cd $brotli_folder/nginx-$NGINX_VERSION || exit \
     && ./configure --with-compat --add-dynamic-module=../ngx_brotli \
