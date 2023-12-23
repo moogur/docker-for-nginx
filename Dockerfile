@@ -11,9 +11,9 @@ WORKDIR /additional
 
 COPY docker-entrypoint.sh docker-entrypoint.sh
 
-RUN mkdir brotli-dist
+RUN mkdir additional-dist
 
-ENV brotli_folder=/additional
+ENV base_folder=/additional
 
 RUN apk update \
     && apk add wget linux-headers openssl-dev pcre2-dev zlib-dev abuild \
@@ -21,17 +21,21 @@ RUN apk update \
     && wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar zxvf nginx-$NGINX_VERSION.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git \
-    && cd $brotli_folder/ngx_brotli || exit \
+    && git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git \
+    && cd $base_folder/ngx_brotli || exit \
     && git checkout 6e975bcb015f62e1f303054897783355e2a877dc \
     && git submodule update --init \
-    && cd $brotli_folder/nginx-$NGINX_VERSION || exit \
-    && ./configure --with-compat --add-dynamic-module=../ngx_brotli \
+    && cd $base_folder/nginx-$NGINX_VERSION || exit \
+    && ./configure \
+      --with-compat \
+      --add-dynamic-module=../ngx_brotli \
+      --add-dynamic-module=../ngx_http_substitutions_filter_module \
     && make modules \
-    && cp $brotli_folder/nginx-$NGINX_VERSION/objs/*.so $brotli_folder/brotli-dist \
-    && echo "brotli assembled successfully"
+    && cp $base_folder/nginx-$NGINX_VERSION/objs/*.so $base_folder/additional-dist \
+    && echo "all modules have been successfully assembled"
 
 # Second stage to run
 FROM nginx:${NGINX_VERSION}-alpine
 
 COPY --from=build /additional/docker-entrypoint.sh /docker-entrypoint.sh
-COPY --from=build /additional/brotli-dist /usr/lib/nginx/additional-modules
+COPY --from=build /additional/additional-dist /usr/lib/nginx/additional-modules
