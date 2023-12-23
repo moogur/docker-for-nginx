@@ -6,9 +6,10 @@
 
 - <https://github.com/nginx/nginx>
 
-### Brotli
+### Mодули включеные в сборку (установка с помощью директивы `load_module`)
 
-- <https://github.com/google/ngx_brotli>
+- [brotli](https://github.com/google/ngx_brotli)
+- [substitutions](https://github.com/yaoweibin/ngx_http_substitutions_filter_module)
 
 ### Docker container
 
