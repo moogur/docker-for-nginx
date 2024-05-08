@@ -1,6 +1,6 @@
 # Докер образ веб сервера nginx
 
-Докер сборка nginx, это веб-сервер и почтовый прокси-сервер
+Докер сборка nginx, версии alpine slim, это веб-сервер и почтовый прокси-сервер
 
 ## Репозиторий nginx
 
@@ -10,11 +10,8 @@
 
 - [brotli](https://github.com/google/ngx_brotli)
 - [substitutions](https://github.com/yaoweibin/ngx_http_substitutions_filter_module)
+- [zstd](https://github.com/tokers/zstd-nginx-module)
 
 ### Docker container
 
 - <https://github.com/nginxinc/docker-nginx>
-
-## Переменные
-
-- LOCAL_DATABASES - если `false` то скачивает базы mixmind из интернета
