@@ -16,8 +16,6 @@ RUN apk add curl ca-certificates \
     && rm -f /usr/lib/angie/modules/*debug.so
 
 # Second stage to run
-FROM nginx:${NGINX_VERSION}-alpine-slim
-
-RUN apk add brotli-libs
+FROM nginx:${NGINX_VERSION}-alpine
 
 COPY --from=build /usr/lib/angie/modules /usr/lib/nginx/additional-modules
