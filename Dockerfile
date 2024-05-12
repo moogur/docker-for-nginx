@@ -37,6 +37,6 @@ RUN apk update \
 # Second stage to run
 FROM nginx:${NGINX_VERSION}-alpine-slim
 
-RUN apk add brotli-libs
+RUN apk add --no-cache zstd-dev
 
 COPY --from=build /additional/additional-dist /usr/lib/nginx/additional-modules
