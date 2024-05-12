@@ -10,7 +10,7 @@
 
 - [brotli](https://github.com/google/ngx_brotli)
 - [substitutions](https://github.com/yaoweibin/ngx_http_substitutions_filter_module)
-<!-- - [zstd](https://github.com/tokers/zstd-nginx-module) -->
+- [zstd](https://github.com/tokers/zstd-nginx-module)
 
 ### Docker container
 

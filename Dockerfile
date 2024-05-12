@@ -15,11 +15,12 @@ ENV base_folder=/additional
 
 RUN apk update \
     && apk add wget linux-headers openssl-dev pcre2-dev zlib-dev abuild \
-      musl-dev libxslt libxml2-utils make gcc unzip git xz g++ coreutils \
+      musl-dev libxslt libxml2-utils make gcc unzip git xz g++ coreutils zstd zstd-dev \
     && wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar zxvf nginx-$NGINX_VERSION.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git \
     && git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git \
+    && git clone https://github.com/tokers/zstd-nginx-module.git \
     && cd $base_folder/ngx_brotli || exit \
     && git checkout 6e975bcb015f62e1f303054897783355e2a877dc \
     && git submodule update --init \
@@ -28,6 +29,7 @@ RUN apk update \
       --with-compat \
       --add-dynamic-module=../ngx_brotli \
       --add-dynamic-module=../ngx_http_substitutions_filter_module \
+      --add-dynamic-module=../zstd-nginx-module \
     && make modules \
     && cp $base_folder/nginx-$NGINX_VERSION/objs/*.so $base_folder/additional-dist \
     && echo "all modules have been successfully assembled"
