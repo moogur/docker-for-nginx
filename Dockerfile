@@ -1,5 +1,5 @@
 # Set versions
-ARG ALPINE_VERSION=3.18
+ARG ALPINE_VERSION=3.19
 ARG NGINX_VERSION=1.25.5
 
 # First stage to build
