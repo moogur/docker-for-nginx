@@ -13,8 +13,6 @@ RUN mkdir additional-dist
 
 ENV base_folder=/additional
 
- build-base pcre-dev zlib-dev gnupg
-
 RUN apk update \
     && apk add wget linux-headers openssl-dev pcre2-dev zlib-dev abuild \
       musl-dev libxslt libxml2-utils make gcc unzip git xz g++ coreutils \
