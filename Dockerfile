@@ -1,6 +1,6 @@
 # Set versions
 ARG ALPINE_VERSION=3.19
-ARG NGINX_VERSION=1.25.5
+ARG NGINX_VERSION=1.27.0
 
 # First stage to build
 FROM alpine:${ALPINE_VERSION} AS build
@@ -21,6 +21,7 @@ RUN apk update \
     && git clone https://github.com/google/ngx_brotli.git \
     && git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git \
     && git clone https://github.com/tokers/zstd-nginx-module.git \
+    && git clone https://github.com/openresty/headers-more-nginx-module.git \
     && cd $base_folder/ngx_brotli || exit \
     && git checkout 6e975bcb015f62e1f303054897783355e2a877dc \
     && git submodule update --init \
@@ -30,6 +31,7 @@ RUN apk update \
       --add-dynamic-module=../ngx_brotli \
       --add-dynamic-module=../ngx_http_substitutions_filter_module \
       --add-dynamic-module=../zstd-nginx-module \
+      --add-dynamic-module=../headers-more-nginx-module \
     && make modules \
     && cp $base_folder/nginx-$NGINX_VERSION/objs/*.so $base_folder/additional-dist \
     && echo "all modules have been successfully assembled"
