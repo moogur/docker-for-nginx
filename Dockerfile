@@ -19,9 +19,9 @@ RUN apk update \
     && wget https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz \
     && tar zxvf nginx-$NGINX_VERSION.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git \
-    && git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git \
-    && git clone https://github.com/tokers/zstd-nginx-module.git \
-    && git clone https://github.com/openresty/headers-more-nginx-module.git \
+    && git clone --depth=1 --single-branch -b master https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git \
+    && git clone --depth=1 --single-branch -b master https://github.com/tokers/zstd-nginx-module.git \
+    && git clone --depth=1 --single-branch -b master https://github.com/openresty/headers-more-nginx-module.git \
     && cd $base_folder/ngx_brotli || exit \
     && git checkout 6e975bcb015f62e1f303054897783355e2a877dc \
     && git submodule update --init \
