@@ -64,7 +64,9 @@ function validateTaskNumber() {
 }
 
 # variables
-commit=$(cat "$1")
+# Только заголовок: awk разбирает построчно, и на многострочном сообщении
+# в проверку уходила склейка первых слов всех строк
+commit=$(head -1 "$1")
 task_number=$(echo "$commit" | awk -F' ' '{print $1}')
 type=$(echo "$commit" | awk -F'] ' '{print $2}' | awk -F'(' '{print $1}')
 scope=$(echo "$commit" | awk -F'(' '{print $2}' | awk -F')' '{print $1}')
