@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     tags:
-      - "[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
   kanboard:
@@ -18,3 +18,5 @@ jobs:
     needs: kanboard
     uses: moogur/all-workflows/.github/workflows/deploy_for_docker_container.yml@master
     secrets: inherit
+    with:
+      format_mode: 'semver'
