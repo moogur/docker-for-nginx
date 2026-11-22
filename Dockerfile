@@ -1,6 +1,6 @@
 # Set versions
 ARG ALPINE_VERSION=3.24
-ARG NGINX_VERSION=1.31.5
+ARG NGINX_VERSION=1.31.9
 
 # First stage to build
 FROM alpine:${ALPINE_VERSION} AS build
