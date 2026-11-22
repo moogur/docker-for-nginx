@@ -10,7 +10,7 @@ jobs:
     uses: moogur/all-workflows/.github/workflows/kaneo.yml@master
     secrets: inherit
     with:
-      kaneo_scheme: 'single'
+      kaneo_scheme: 'single_ready'
       event_type: 'deploy'
 
   deploy:
