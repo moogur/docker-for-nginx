@@ -100,9 +100,9 @@ git tag v1.0.1
 git push origin v1.0.1
 ```
 
-Workflow вызывает `deploy_for_docker_container` из [all-workflows](https://github.com/moogur/all-workflows)
-с `format_mode: 'semver'` — он и раскладывает один тег в `v1.0.1`, `v1.0`, `v1`, `latest`.
-Пуш в `master` образ не собирает: там работает только интеграция с Kanboard
+Workflow вызывает `deploy_for_docker_container` из [all-workflows](https://github.com/moogur/all-workflows) —
+он сам определяет формат по тегу и раскладывает `v1.0.1` в `v1.0.1`, `v1.0`, `v1`, `latest`.
+Пуш в `master` образ не собирает: там работает только интеграция с Kaneo
 ([`.github/workflows/push.yml`](.github/workflows/push.yml)).
 
 Теги-даты (`14.03.2026` и раньше) — прежний формат, оставлены в истории и под триггер деплоя

@@ -6,11 +6,10 @@ on:
       - master
 
 jobs:
-  kanboard:
+  kaneo:
     if: github.ref_type == 'branch'
-    uses: moogur/all-workflows/.github/workflows/kanboard.yml@master
+    uses: moogur/all-workflows/.github/workflows/kaneo.yml@master
     secrets: inherit
     with:
-      kanboard_columns: '74,75,76,77,-,-,80'
-      project_type: 'single_branch'
+      kaneo_scheme: 'single'
       event_type: 'push'

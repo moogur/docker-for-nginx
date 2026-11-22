@@ -6,17 +6,14 @@ on:
       - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
-  kanboard:
-    uses: moogur/all-workflows/.github/workflows/kanboard.yml@master
+  kaneo:
+    uses: moogur/all-workflows/.github/workflows/kaneo.yml@master
     secrets: inherit
     with:
-      kanboard_columns: '74,75,76,-,-,77,80'
-      project_type: 'multi_branch'
+      kaneo_scheme: 'single'
       event_type: 'deploy'
 
   deploy:
-    needs: kanboard
+    needs: kaneo
     uses: moogur/all-workflows/.github/workflows/deploy_for_docker_container.yml@master
     secrets: inherit
-    with:
-      format_mode: 'semver'
